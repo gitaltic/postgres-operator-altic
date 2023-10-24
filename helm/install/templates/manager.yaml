@@ -50,3 +50,9 @@ spec:
           capabilities: { drop: [ALL] }
           readOnlyRootFilesystem: true
           runAsNonRoot: true
+      {{- if .Values.nodeSelector }}
+      nodeSelector: {{ .Values.nodeSelector | nindent 8 }}
+      {{- end }}
+      {{- if .Values.tolerations }}
+      tolerations: {{- .Values.tolerations | nindent 8 }}
+      {{- end }}
