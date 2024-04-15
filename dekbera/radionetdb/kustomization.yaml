@@ -1,0 +1,12 @@
+namespace: radionet
+
+secretGenerator:
+- name: radionetdb-backup-secret
+  files:
+  - radionetdb-backup-secret.conf
+
+generatorOptions:
+  disableNameSuffixHash: true
+
+resources:
+- radionetdb-cr.yaml
