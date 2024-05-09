@@ -6,7 +6,8 @@ metadata:
   name: radionetdb
   namespace: radionet
 spec:
-  postgresVersion: 16
+  shutdown: false # upgrade 
+  postgresVersion: 15
   postGISVersion: "3.3"
   backups:
     pgbackrest:
@@ -32,14 +33,13 @@ spec:
   instances:
     - affinity:
         nodeAffinity:
-          preferredDuringSchedulingIgnoredDuringExecution:
-            - preference:
-                matchExpressions:
-                  - key: node
-                    operator: In
-                    values:
-                      - dbruntime
-              weight: 1
+          requiredDuringSchedulingIgnoredDuringExecution:
+            nodeSelectorTerms:
+            - matchFields:
+              - key: metadata.name
+                operator: In
+                values:
+                - aks-spotprod-11098919-vmss00000a
         podAntiAffinity:
           preferredDuringSchedulingIgnoredDuringExecution:
             - podAffinityTerm:
@@ -51,25 +51,23 @@ spec:
               weight: 1
       tolerations:
         - effect: NoSchedule
-          key: node
-          operator: Equal
-          value: dbruntime
+          operator: Exists
       dataVolumeClaimSpec:
         accessModes:
           - ReadWriteOnce
         resources:
           requests:
-            storage: 256Gi
+            storage: 300Gi
         storageClassName: managed-csi-zrs
       name: radionetdb
       replicas: 2
       resources:
         requests:
-          cpu: 500m
-          memory: 4Gi
+          cpu: 250m
+          memory: 512Mi
         limits:
-          cpu: 3M
-          memory: 12.5Gi
+          cpu: 1M
+          memory: 2Gi
   service:
     type: LoadBalancer
     metadata:
