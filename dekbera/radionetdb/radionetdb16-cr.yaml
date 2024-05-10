@@ -76,5 +76,6 @@ spec:
     metadata:
      annotations:
        service.beta.kubernetes.io/azure-load-balancer-internal: "true"
+       service.beta.kubernetes.io/azure-load-balancer-tcp-idle-timeout: "30"
   users:
     - name: postgres
