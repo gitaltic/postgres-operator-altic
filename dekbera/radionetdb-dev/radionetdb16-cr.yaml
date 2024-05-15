@@ -1,0 +1,57 @@
+apiVersion: postgres-operator.crunchydata.com/v1beta1
+kind: PostgresCluster
+metadata:
+  labels:
+    argocd.argoproj.io/instance: radionetdb16
+  name: radionetdb16
+  namespace: radionet
+spec:
+  shutdown: false # upgrade 
+  postgresVersion: 16
+  postGISVersion: "3.3"
+  backups:
+    pgbackrest:
+      manual:
+        repoName: repo1
+        options:
+         - --type=full --stop-auto
+      configuration:
+      - secret:
+          name: radionetdb-backup-secret
+      global:
+        repo1-path: /pgbackrest/radionetdb16/repo1
+        repo1-retention-full: "1"
+        repo1-retention-full-type: time
+        repo1-retention-diff: "6"
+      repos:
+      - name: repo1
+        azure:
+          container: dekberadddevbck
+        schedules:
+          full: "0 2 * * 6"
+          differential: "0 2 * * 0-5"
+  instances:
+    - dataVolumeClaimSpec:
+        accessModes:
+          - ReadWriteOnce
+        resources:
+          requests:
+            storage: 300Gi
+        storageClassName: managed-csi
+      name: radionetdb16
+      replicas: 2
+      resources:
+        requests:
+          cpu: 500m
+          memory: 4Gi
+        limits:
+          cpu: 3M
+          memory: 12.5Gi
+  service:
+    type: LoadBalancer
+    metadata:
+     annotations:
+       service.beta.kubernetes.io/azure-load-balancer-internal: "true"
+       service.beta.kubernetes.io/azure-load-balancer-tcp-idle-timeout: "30"
+  users:
+    - name: postgres

@@ -9,5 +9,4 @@ generatorOptions:
   disableNameSuffixHash: true
 
 resources:
-- radionetdb-cr.yaml
 - radionetdb16-cr.yaml
