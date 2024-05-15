@@ -3,10 +3,10 @@ kind: Kustomization
 
 namespace: radionet
 
-secretGenerator:
-- name: radionetdb-backup-secret
-  files:
-  - radionetdb-backup-secret.conf
+#secretGenerator:
+#- name: radionetdb-backup-secret
+#  files:
+#  - radionetdb-backup-secret.conf
 
 generatorOptions:
   disableNameSuffixHash: true
