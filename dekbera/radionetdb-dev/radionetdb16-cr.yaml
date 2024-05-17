@@ -53,5 +53,6 @@ spec:
      annotations:
        service.beta.kubernetes.io/azure-load-balancer-internal: "true"
        service.beta.kubernetes.io/azure-load-balancer-tcp-idle-timeout: "30"
+       service.beta.kubernetes.io/port_5432_no_lb_rule: "true"
   users:
     - name: postgres
