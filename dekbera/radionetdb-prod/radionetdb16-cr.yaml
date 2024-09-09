@@ -36,7 +36,7 @@ spec:
           - ReadWriteOnce
         resources:
           requests:
-            storage: 300Gi
+            storage: 400Gi
         storageClassName: managed-csi-zrs
       name: radionetdb16
       replicas: 2
