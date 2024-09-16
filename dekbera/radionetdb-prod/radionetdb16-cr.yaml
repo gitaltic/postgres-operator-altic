@@ -46,7 +46,7 @@ spec:
           memory: 4Gi
         limits:
           cpu: 3M
-          memory: 12.5Gi
+          memory: 12Gi
       affinity:
         nodeAffinity:
           preferredDuringSchedulingIgnoredDuringExecution:
