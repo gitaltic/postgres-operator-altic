@@ -24,6 +24,12 @@ spec:
       configuration:
       - secret:
           name: radionetdb-backup-secret
+      jobs:
+        tolerations:
+        - effect: NoSchedule
+          key: kubernetes.azure.com/scalesetpriority
+          operator: Equal
+          value: spot
       global:
         repo1-path: /pgbackrest/radionetdb16/repo1
         repo1-retention-full: "1"
